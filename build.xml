@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="pastry-mini-project" default="clean" basedir=".">
+	<dirname property="base" file="${ant.file}"/>
+	<property name="jarname" value="pastry-mini-project"/>
+	<property name="zipname" value="AntZip"/>
+	<property name="dir.target" value="target" />
+	<property name="dir.target.classes" value="${dir.target}/classes" />
+	<property name="dir.target.dependency" value="${dir.target}/dependency" />
+	<property name="dir.src" value="src" />
+	<property name="dir.lib" value="lib" />
+	<property name="src.enc" value="UTF-8" />
+	<path id="build.lib">
+		<fileset dir="${dir.lib}" >
+			<include name="*" />
+		</fileset>
+	</path>
+	<target name="compile" description="">
+		<mkdir dir="${dir.target.classes}"/>
+		<javac classpathref="build.lib"
+			srcdir="${dir.src}"
+			destdir="${dir.target.classes}"
+			deprecation="yes"
+			includes="**/*.java"
+			debug="true"
+			debuglevel="lines,vars,source"/>
+	</target>
+	<target name="clean" description="">
+		<delete dir="${dir.target}"/>
+	</target>
+</project>
