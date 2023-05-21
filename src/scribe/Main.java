@@ -22,13 +22,15 @@ public class Main {
 
     public Main(int numOfNodes, int port, Environment env) throws Exception {
         NodeIdFactory nodeIdFactory = new RandomNodeIdFactory(env);
-        PastryNodeFactory factory = new SocketPastryNodeFactory(nodeIdFactory, numOfNodes, env);
+        System.out.println("Creating " + numOfNodes + " nodes");
+        PastryNodeFactory factory = new SocketPastryNodeFactory(nodeIdFactory, port, env);
         InetSocketAddress bootaddress = new InetSocketAddress(InetAddress.getLocalHost(), port);
-
+        System.out.println("Localhost " + InetAddress.getLocalHost());
         for (int i = 0; i < numOfNodes; i++) {
             PastryNode node = factory.newNode();
             Client app = new Client(node);
             apps.add(app);
+            System.out.println("Bootaddress: " + bootaddress);
             node.boot(bootaddress);
 
             synchronized(node) {
