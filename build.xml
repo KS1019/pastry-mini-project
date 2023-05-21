@@ -40,7 +40,7 @@
 
 	<target name="run" depends="jar" description="">
 		<input message="Enter the number of nodes: " addproperty="numnodes" defaultvalue="10"/>
-		<input message="Enter the port number: " addproperty="port" defaultvalue="5000"/>
+		<input message="Enter the port number: " addproperty="port" defaultvalue="9999"/>
 		<java classname="scribe.Main" fork="true" failonerror="true">
 			<arg value="${numnodes}"/>
 			<arg value="${port}"/>
