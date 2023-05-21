@@ -1,0 +1,7 @@
+*
+!.devcontainer/
+!lib/
+!src/
+!build.xml
+!Dockerfile
+!.gitignore
