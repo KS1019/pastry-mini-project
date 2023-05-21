@@ -2,29 +2,57 @@
 <project name="pastry-mini-project" default="clean" basedir=".">
 	<dirname property="base" file="${ant.file}"/>
 	<property name="jarname" value="pastry-mini-project"/>
-	<property name="zipname" value="AntZip"/>
-	<property name="dir.target" value="target" />
-	<property name="dir.target.classes" value="${dir.target}/classes" />
+	<property name="build.dir" value="." />  
 	<property name="dir.target.dependency" value="${dir.target}/dependency" />
 	<property name="dir.src" value="src" />
 	<property name="dir.lib" value="lib" />
 	<property name="src.enc" value="UTF-8" />
-	<path id="build.lib">
-		<fileset dir="${dir.lib}" >
-			<include name="*" />
-		</fileset>
-	</path>
+
+	<path id="project.classpath">
+    	<fileset dir="${dir.lib}">
+      		<include name="**/*.jar"/>
+    	</fileset>
+    	<pathelement path="${build.dir}"/>
+  	</path>
+
 	<target name="compile" description="">
-		<mkdir dir="${dir.target.classes}"/>
-		<javac classpathref="build.lib"
+		<javac classpathref="project.classpath"
 			srcdir="${dir.src}"
-			destdir="${dir.target.classes}"
+			destdir="${build.dir}"
 			deprecation="yes"
 			includes="**/*.java"
 			debug="true"
-			debuglevel="lines,vars,source"/>
+			debuglevel="lines,vars,source"
+			includeantruntime="false"/>
 	</target>
+
+	<target name="jar" depends="compile" description="">
+		<jar destfile="${build.dir}/${jarname}.jar" compress="true">
+			<fileset dir="${build.dir}">
+				<include name="**/*.class"/>
+			</fileset>
+			<zipgroupfileset dir="${dir.lib}" includes="**/*.jar"/>
+			<manifest>
+				<attribute name="Main-Class" value="scribe.Main"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run" depends="jar" description="">
+		<input message="Enter the number of nodes: " addproperty="numnodes" defaultvalue="10"/>
+		<input message="Enter the port number: " addproperty="port" defaultvalue="5000"/>
+		<java classname="scribe.Main" fork="true" failonerror="true">
+			<arg value="${numnodes}"/>
+			<arg value="${port}"/>
+			<classpath>
+				<path refid="project.classpath"/>
+				<pathelement path="${build.dir}"/>
+			</classpath>
+		</java>
+	</target>
+
 	<target name="clean" description="">
-		<delete dir="${dir.target}"/>
+		<delete dir="${build.dir}/scribe"/>
+		<delete file="${build.dir}/${jarname}.jar"/>
 	</target>
 </project>
