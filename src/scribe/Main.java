@@ -1,6 +1,7 @@
 package scribe;
 
 import java.util.Vector;
+import java.util.HashSet;
 
 import rice.environment.Environment;
 import rice.pastry.NodeIdFactory;
@@ -9,6 +10,7 @@ import rice.pastry.PastryNodeFactory;
 import rice.pastry.socket.SocketPastryNodeFactory;
 import rice.pastry.standard.RandomNodeIdFactory;
 import rice.p2p.commonapi.NodeHandle;
+import rice.p2p.commonapi.Id;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -19,18 +21,18 @@ import java.util.Iterator;
 
 public class Main {
     Vector<Client> apps = new Vector<Client>();
+    Vector<PastryNode> nodes = new Vector<PastryNode>();
 
     public Main(int numOfNodes, int port, Environment env) throws Exception {
+        InetAddress localhost = InetAddress.getLocalHost();
         NodeIdFactory nodeIdFactory = new RandomNodeIdFactory(env);
-        System.out.println("Creating " + numOfNodes + " nodes");
         PastryNodeFactory factory = new SocketPastryNodeFactory(nodeIdFactory, port, env);
-        InetSocketAddress bootaddress = new InetSocketAddress(InetAddress.getLocalHost(), port);
-        System.out.println("Localhost " + InetAddress.getLocalHost());
+        InetSocketAddress bootaddress = new InetSocketAddress(localhost, port);
         for (int i = 0; i < numOfNodes; i++) {
             PastryNode node = factory.newNode();
             Client app = new Client(node);
             apps.add(app);
-            System.out.println("Bootaddress: " + bootaddress);
+            nodes.add(node);
             node.boot(bootaddress);
 
             synchronized(node) {
@@ -56,7 +58,45 @@ public class Main {
         }
 
         env.getTimeSource().sleep(5000);
+        System.out.println("=".repeat(50));
+        System.out.println("Printing tree of the pastry ring:\n");
+        printTree(apps);
+        System.out.println("=".repeat(50));
 
+        // Wait for 10 seconds then unsubscribe all nodes and terminate the program
+        env.getTimeSource().sleep(10000);
+
+        // Get root node
+        it = apps.iterator();
+        Client root = null;
+        while (it.hasNext()) {
+            app = it.next();
+            if (app.isRoot()) {
+                root = app;
+                break;
+            }
+        }
+
+        if (root != null) {
+            root.stopPublishTask();
+        } else {
+            System.out.println("Root node not found");
+            System.exit(1);
+        }
+
+
+        // Wait for 10 seconds
+        env.getTimeSource().sleep(10000);
+
+        Iterator<PastryNode> itn = nodes.iterator();
+
+        System.out.println("Destroying node environment");
+        while (itn.hasNext()) {
+            // Print destroy message
+            PastryNode node = itn.next();
+            // Check if node is root, and then print its children
+            node.getEnvironment().destroy();
+        }
     }
 
     public static void printTree(Vector<Client> apps) {
@@ -122,16 +162,10 @@ public class Main {
         // Run `java -ea SimpleAggr 5` to get assertion error
         assert args.length == 1 && N > 0;
 
-        // Print "Success" and value of `N`
-        System.out.println("N = " + N);
-        System.out.println("args.length = " + args.length);
-        System.out.println("Success");
-
         try {
             // Launch the application
             Environment env = new Environment();
-
-            Main m = new Main(N, port, env);
+            new Main(N, port, env);
         } catch (Exception e) {
             // Print error message
             System.out.println(e.getMessage());
