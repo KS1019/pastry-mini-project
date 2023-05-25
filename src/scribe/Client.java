@@ -81,14 +81,14 @@ public class Client implements ScribeClient, Application {
       if (isRoot()) {
         HashSet<Id> children = getChildrenSet();
         Iterator<Id> itc = children.iterator();
-        System.out.println("=".repeat(50));
+        System.out.println("\033[1m" + "=".repeat(50) + "\033[0m");
         // Print all the children message
-        System.out.println("Printing children of root node " + endpoint.getId() + ":");
+        System.out.println("\033[1m" + "Printing children of root node " + endpoint.getId() + ":" + "\033[0m");
         while (itc.hasNext()) {
             Id child = itc.next();
-            System.out.println("Child Id: " + child.toString());
+            System.out.println("\033[1m" + "Child Id: " + child.toString() + "\033[0m");
         }
-        System.out.println("=".repeat(50));
+        System.out.println("\033[1m" + "=".repeat(50) + "\033[0m");
         endingTask.cancel();
       } else {
         // get parent node

@@ -105,11 +105,11 @@ public class Main {
     
         // get the root
         NodeHandle root = getRoot(seed, appTable);
-        System.out.println("=".repeat(50));
-        System.out.println("Printing tree of the pastry ring:\n");
+        System.out.println("\033[1m" + "=".repeat(50) + "\033[0m");
+        System.out.println("\033[1m" + "Printing tree of the pastry ring:"  + "\033[0m" + "\n");
         // print the tree from the root down
         recursivelyPrintChildren(root, 0, appTable);
-        System.out.println("=".repeat(50));
+        System.out.println("\033[1m" + "=".repeat(50) + "\033[0m");
     }
 
     public static NodeHandle getRoot(NodeHandle seed, Hashtable<NodeHandle, Client> appTable) {
@@ -127,7 +127,7 @@ public class Main {
             s += "  ";
         }
         s += curNode.getId().toString();
-        System.out.println(s);
+        System.out.println("\033[1m" + s + "\033[0m");
 
         // recursively print all children
         Client app = (Client) appTable.get(curNode);
