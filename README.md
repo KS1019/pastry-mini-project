@@ -8,6 +8,8 @@ This is a mini project using FreePastry. This project is mostly based on Scribe 
 ```shell
 git clone https://github.com/KS1019/pastry-mini-project.git && cd pastry-mini-project && ant run
 ```
+## Notes
+- When adding new files, edit [.gitignore](https://github.com/KS1019/pastry-mini-project/blob/main/.gitignore) as well to check them into the version control.
 
 ## Known Issues
 - Ports are not released properly after the program run and you might have to use differnt port every time you run the program.
