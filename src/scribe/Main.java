@@ -1,8 +1,5 @@
 package scribe;
 
-import java.util.Vector;
-import java.util.HashSet;
-
 import rice.environment.Environment;
 import rice.pastry.NodeIdFactory;
 import rice.pastry.PastryNode;
@@ -10,14 +7,14 @@ import rice.pastry.PastryNodeFactory;
 import rice.pastry.socket.SocketPastryNodeFactory;
 import rice.pastry.standard.RandomNodeIdFactory;
 import rice.p2p.commonapi.NodeHandle;
-import rice.p2p.commonapi.Id;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.util.Scanner;
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Vector;
 
 public class Main {
     Vector<Client> apps = new Vector<Client>();
@@ -107,8 +104,7 @@ public class Main {
           Client app = (Client) i.next();
           appTable.put(app.endpoint.getLocalNodeHandle(), app);
         }
-        NodeHandle seed = ((Client) apps.get(0)).endpoint
-            .getLocalNodeHandle();
+        NodeHandle seed = ((Client) apps.get(0)).endpoint.getLocalNodeHandle();
     
         // get the root
         NodeHandle root = getRoot(seed, appTable);

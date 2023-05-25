@@ -2,10 +2,9 @@ package scribe;
 
 import rice.p2p.scribe.ScribeContent;
 import rice.p2p.commonapi.Id;
+import rice.p2p.commonapi.NodeHandle;
 
 import java.util.HashSet;
-
-import rice.p2p.commonapi.NodeHandle;
 
 public class Content implements ScribeContent {
   NodeHandle from;

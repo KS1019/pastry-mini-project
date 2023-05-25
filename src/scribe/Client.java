@@ -151,12 +151,6 @@ public class Client implements ScribeClient, Application {
     children.add(child.getId());
   }
 
-  public void childRemoved(Topic topic, NodeHandle child) {
-  }
-
-  public void subscribeFailed(Topic topic) {
-  }
-
   public boolean forward(RouteMessage message) {
     return true;
   }
@@ -203,4 +197,8 @@ public class Client implements ScribeClient, Application {
   public HashSet<Id> getChildrenSet() {
     return children;
   }
+
+  public void childRemoved(Topic topic, NodeHandle child) {}
+
+  public void subscribeFailed(Topic topic) {}
 }
