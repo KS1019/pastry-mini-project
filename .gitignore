@@ -1,7 +1,6 @@
 *
-!.devcontainer/
 !lib/
 !src/
 !build.xml
-!Dockerfile
 !.gitignore
+!README.md
