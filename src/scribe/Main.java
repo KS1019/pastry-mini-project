@@ -55,10 +55,7 @@ public class Main {
         }
 
         env.getTimeSource().sleep(5000);
-        System.out.println("=".repeat(50));
-        System.out.println("Printing tree of the pastry ring:\n");
         printTree(apps);
-        System.out.println("=".repeat(50));
 
         // Wait for 10 seconds then unsubscribe all nodes and terminate the program
         env.getTimeSource().sleep(10000);
@@ -108,9 +105,11 @@ public class Main {
     
         // get the root
         NodeHandle root = getRoot(seed, appTable);
-    
+        System.out.println("=".repeat(50));
+        System.out.println("Printing tree of the pastry ring:\n");
         // print the tree from the root down
         recursivelyPrintChildren(root, 0, appTable);
+        System.out.println("=".repeat(50));
     }
 
     public static NodeHandle getRoot(NodeHandle seed, Hashtable<NodeHandle, Client> appTable) {

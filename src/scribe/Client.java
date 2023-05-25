@@ -61,7 +61,6 @@ public class Client implements ScribeClient, Application {
   }
 
   public void stopPublishTask() {
-    publishTask.cancel();
     endingTask = endpoint.scheduleMessage(new EndingContent(), 0, 500);
     System.out.println("Stopped publishing task.");
   }
@@ -106,7 +105,7 @@ public class Client implements ScribeClient, Application {
    * Sends the multicast message.
    */
   public void sendMulticast() {
-    System.out.println("Node "+endpoint.getLocalNodeHandle()+" broadcasting "+seqNum);
+    System.out.println("Node "+endpoint.getId()+" broadcasting "+seqNum);
     // Add self to children
     HashSet<Id> children = new HashSet<Id>(this.children);
     children.add(this.endpoint.getLocalNodeHandle().getId());
@@ -139,9 +138,7 @@ public class Client implements ScribeClient, Application {
   }
 
   public boolean anycast(Topic topic, ScribeContent content) {
-    boolean returnValue = myScribe.getEnvironment().getRandomSource().nextInt(3) == 0;
-    System.out.println("Client.anycast("+topic+","+content+"):"+returnValue);
-    return returnValue;
+    return true;
   }
 
   public void childAdded(Topic topic, NodeHandle child) {
