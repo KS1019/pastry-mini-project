@@ -1,6 +1,2 @@
-*
-!lib/
-!src/
-!build.xml
-!.gitignore
-!README.md
+pastry-mini-project.jar
+scribe/
