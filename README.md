@@ -1,7 +1,7 @@
 # Pastry mini project
 
 ## Introduction
-This is a mini project using FreePastry. This project is mostly based on Scribe tutorial of FreePastry with some additions to meet its requirements.
+This is a mini project using FreePastry. This project is mostly based on Scribe tutorial of FreePastry with some modifications to meet its requirements.
 
 ## Prerequisites
 - [Apache Ant - Welcome](https://ant.apache.org/)
