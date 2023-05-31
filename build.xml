@@ -15,7 +15,7 @@
     	<pathelement path="${build.dir}"/>
   	</path>
 
-	<target name="compile" description="">
+	<target name="compile" description="Compiles all the Java files in this project to Class files">
 		<javac classpathref="project.classpath"
 			srcdir="${dir.src}"
 			destdir="${build.dir}"
@@ -26,7 +26,7 @@
 			includeantruntime="false"/>
 	</target>
 
-	<target name="jar" depends="compile" description="">
+	<target name="jar" depends="compile" description="Generates Jar file from all the class files in this project">
 		<jar destfile="${build.dir}/${jarname}.jar" compress="true">
 			<fileset dir="${build.dir}">
 				<include name="**/*.class"/>
@@ -38,7 +38,7 @@
 		</jar>
 	</target>
 
-	<target name="run" depends="jar" description="">
+	<target name="run" depends="jar" description="Executes the Jar file of this project">
 		<input message="Enter the number of nodes: " addproperty="numnodes" defaultvalue="10"/>
 		<input message="Enter the port number: " addproperty="port" defaultvalue="9999"/>
 		<java classname="scribe.Main" fork="true" failonerror="true">
@@ -51,7 +51,7 @@
 		</java>
 	</target>
 
-	<target name="clean" description="">
+	<target name="clean" description="Deletes all the class files and the generated Jar file in this project">
 		<delete dir="${build.dir}/scribe"/>
 		<delete file="${build.dir}/${jarname}.jar"/>
 	</target>
